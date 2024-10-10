@@ -1,20 +1,28 @@
+.top-button {
+    text-align: center;
+    margin: 15px;
+}
 .page-warp {
     padding: .75rem;
-    background: red;
     transition: transform 0.5s ease;
     text-align: center;
+    margin: 10px;
+    position:relative;
+    border: 0 solid #e5e7eb;
+    overflow: hidden;
 }
 .page-warp:hover {
     background: rgb(227, 225, 225);
 }
-.document-wrap {
-   
+.pagestyle {
+   z-index: 9999;
 }
 .view-warp {
-    display:  flex;
+    display: flex;
+    flex: 1;
     margin: 0 auto;
     border: 2px solid red($color: #000000);
-    width: 1536px;
+    justify-content: center;
+    max-width: 2300px;
     flex-wrap: wrap;
-   
 }
