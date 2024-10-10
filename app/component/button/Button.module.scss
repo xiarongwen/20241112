@@ -1,0 +1,44 @@
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &.primary {
+      background-color: rgb(255, 97, 47);
+      color: white;
+    }
+  
+    &.remove {
+        background-color: rgb(31, 41, 55);
+      background-color: #6c757d;
+      color: white;
+    }
+  
+    &.circle {
+      background-color: #dc3545;
+      color: white;
+    }
+  
+    &.small {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+  
+    &.medium {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  
+    &.large {
+      padding: 15px 30px;
+      font-size: 16px;
+    }
+  
+    &.disabled {
+      background-color: #e9ecef;
+      color: #adb5bd;
+      cursor: not-allowed;
+    }
+  }
