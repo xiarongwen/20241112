@@ -159,7 +159,7 @@ const PDFProcessor: React.FC<IProps> = () => {
                     <Document rotate={rotationAngle} file={file} onLoadSuccess={onDocumentLoadSuccess}>
                         <div className='flex flex-wrap justify-center'>
                             {Array.from({ length: numPages }, (_, index) => (
-                                <div className='m-3' style={{maxWidth: `${wrapLevel}px`, flex:` 0 0 ${wrapLevel}px`}} onClick={() => handlePageClick(index + 1)}>
+                                <div key={index} className='m-3' style={{maxWidth: `${wrapLevel}px`, flex:` 0 0 ${wrapLevel}px`}} onClick={() => handlePageClick(index + 1)}>
                                     <div className='relative cursor-pointer'>
                                         <div className='overflow-hidden transition-transform'>
                                             <div className='relative h-full w-full flex flex-col justify-between items-center shadow-md p-3 bg-white hover:bg-gray-50'>
