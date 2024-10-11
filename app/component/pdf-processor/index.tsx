@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
+import { Document, Page, pdfjs  } from 'react-pdf';
+import { PDFDocumentProxy } from 'pdfjs-dist';
 import Button from '../button';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import './index.scss'
@@ -23,7 +24,8 @@ const PDFProcessor: React.FC<IProps> = () => {
         setFile(selectedFile);
     };
 
-    const onDocumentLoadSuccess = ({ numPages: totalPages }) => {
+    const onDocumentLoadSuccess = (pdf: PDFDocumentProxy) => {
+        const totalPages = pdf.numPages;
         setNumPages(totalPages);
     };
 
