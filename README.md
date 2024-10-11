@@ -6,6 +6,9 @@
 
 PDF 处理工具是一个简单的网页应用，允许用户上传 PDF 文件，旋转页面，并下载修改后的 PDF。该应用使用 React 和 `pdf-lib` 构建，提供了一个直观易用的界面来管理 PDF 文件。
 
+## 演示
+[在线演示](https://rotate-server-3a2cq1pnw-xiarongwens-projects.vercel.app/)
+
 ## 功能
 
 - 通过拖拽或文件输入上传 PDF 文件。
@@ -43,3 +46,10 @@ npm install
 
 lighthouse seo报告
 ![alt text](image.png)
+
+
+## 遇到的难点
+1. 在部署vercel时遇到Error occurred prerendering page "/".报错，一开始以为是APP Router的问题，之后把文件都放在pages文件夹中后继续尝试打包依旧报错，之后排查是否有缺失的数据未使用try catch捕获错误，经过排查后不是这个问题
+然后查阅nextjs prerender发现可能是react-pdf组件不支持ssr，然后在page页面引入时把ssr改为false，报错解决
+
+2. 由于react-pdf不支持导出pdf功能，所以这个下载功能需要手动获取到pdf的canvas再转化成blob文件流来下载，所以这一步有点难
