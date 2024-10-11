@@ -7,7 +7,7 @@ import { degrees, PDFDocument } from 'pdf-lib';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 interface IProps {
-    message: string;
+    message?: string;
   }
 
 const PDFProcessor: React.FC<IProps> = () => {
