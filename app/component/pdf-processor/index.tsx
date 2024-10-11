@@ -6,8 +6,11 @@ import './index.scss'
 import { degrees, PDFDocument } from 'pdf-lib';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+interface IProps {
+    message: string;
+  }
 
-const PDFProcessor: React.FC<{}> = () => {
+const PDFProcessor: React.FC<IProps> = () => {
     const [file, setFile] = useState(null as any);
     const [numPages, setNumPages] = useState(0);
     const [rotationAngle, setRotationAngle] = useState(0);
@@ -113,7 +116,7 @@ const PDFProcessor: React.FC<{}> = () => {
     const onRotateAll = () => {
         setRotationAngle((prevAngle) => prevAngle + 90);
         const updatedPageRotations = pageRotations.map(
-            (pageRotation, index) => pageRotation + rotationAngle
+            (pageRotation) => pageRotation + rotationAngle
         );
         setPageRotations(updatedPageRotations);
     };
