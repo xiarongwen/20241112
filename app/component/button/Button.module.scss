@@ -4,22 +4,17 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  
+    font-size: 16px;
     &.primary {
       background-color: rgb(255, 97, 47);
       color: white;
     }
   
     &.remove {
-        background-color: rgb(31, 41, 55);
-      background-color: #6c757d;
+      background-color: rgb(31, 41, 55);
       color: white;
     }
-  
-    &.circle {
-      background-color: #dc3545;
-      color: white;
-    }
+
   
     &.small {
       padding: 5px 10px;
@@ -40,5 +35,22 @@
       background-color: #e9ecef;
       color: #adb5bd;
       cursor: not-allowed;
+    }
+
+      
+    &.circle {
+      height: 36px;
+      width: 36px;
+      padding: 0;
+      background-color: #fff;
+      border-radius: 50%;
+      border: 0 solid #e5e7eb;
+      transition: all 0.3s ease;
+      text-align: center;
+      padding: 8px;
+    
+    }
+    &.circle:hover {
+      transform: scale(1.1);
     }
   }

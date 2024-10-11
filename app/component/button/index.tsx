@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './Button.module.scss';
 
 interface IButton {
-    label: string;
+    label: any;
     type?: 'primary' | 'remove' | 'circle';
     size?: 'small' | 'medium' | 'large';
     disabled?: boolean;

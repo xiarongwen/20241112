@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Document, Page, pdfjs  } from 'react-pdf';
 import { PDFDocumentProxy } from 'pdfjs-dist';
+import Tooltip from '../Tooltip'
 import Button from '../button';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import './index.scss'
 import { degrees, PDFDocument } from 'pdf-lib';
+
+const zoomInIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"></path></svg>
+const zoomOutIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM13.5 10.5h-6"></path></svg>
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 interface IProps {
@@ -18,6 +22,8 @@ const PDFProcessor: React.FC<IProps> = () => {
     const [zoomLevel, setZoomLevel] = useState(1);
     const [wrapLevel, setWrapLevel] = useState(200);
     const [pageRotations, setPageRotations] = useState<number[]>([]);
+    const [maxIn, setMaxIn] = useState(false);
+    const [maxOut, setMaxOut] = useState(false);
 
     const onFileChange = (event: any) => {
         const selectedFile = event.target.files[0];
@@ -92,8 +98,10 @@ const PDFProcessor: React.FC<IProps> = () => {
         if (zoomLevel < 2) {
             setZoomLevel(prevZoom => prevZoom + 0.3);
             setWrapLevel(prevWrap => prevWrap + 50);
-        } else {
+            setMaxOut(false)
 
+        } else {
+            setMaxIn(true)
         }
 
     };
@@ -102,7 +110,10 @@ const PDFProcessor: React.FC<IProps> = () => {
         if (zoomLevel > 0.8) {
             setZoomLevel(prevZoom => prevZoom - 0.3 > 0 ? prevZoom - 0.3 : prevZoom);
             setWrapLevel(prevWrap => prevWrap - 50);
+            setMaxIn(false)
+
         } else {
+            setMaxOut(true)
             
         }
 
@@ -153,9 +164,16 @@ const PDFProcessor: React.FC<IProps> = () => {
             <>
                 <div className='flex justify-center items-center space-x-3 selecto-ignore'>
                     <Button onClick={onRotateAll} label='Rotate all' />
-                    <Button onClick={onRemove} type='remove' label='Remove PDF' />
-                    <Button onClick={handleZoomIn} type='circle' label='+' />
-                    <Button onClick={handleZoomOut} type='circle' label='-' />
+                    <Tooltip position='top' text='Remove this PDF and select a new one' children={
+                        <Button onClick={onRemove} type='remove' label='Remove PDF' />
+                    } />
+                     <Tooltip position='top' text='Zoom In' children={
+                       <Button disabled={maxIn} onClick={handleZoomIn} type='circle' label={zoomInIcon} />
+                    } />
+                     <Tooltip position='top' text='Zoom Out' children={
+                        <Button disabled={maxOut} onClick={handleZoomOut} type='circle' label={zoomOutIcon} />
+                    } />
+                   
                 </div>
                 <div className='flex flex-wrap justify-center'>
                     <Document rotate={rotationAngle} file={file} onLoadSuccess={onDocumentLoadSuccess}>
