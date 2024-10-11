@@ -50,7 +50,7 @@ const Home = () => {
           </p>
         </div>
         <section >
-        <PDFProcessor />
+        <PDFProcessor  />
       </section>
       </div>
       
