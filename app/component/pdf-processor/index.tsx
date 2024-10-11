@@ -3,6 +3,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import Button from '../button';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import './index.scss'
+import { degrees, PDFDocument } from 'pdf-lib';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -43,24 +44,61 @@ const PDFProcessor: React.FC<{}> = () => {
         setFile(null)
     }
 
-    const onDownload = () => {
-       
-      };
-    
+    const onDownload = async () => {
+        if (!file) return;
+
+        const fileReader = new FileReader();
+        
+        fileReader.onload = async () => {
+            const arrayBuffer = fileReader.result as ArrayBuffer;
+            
+            // 加载 PDF
+            const pdfDoc = await PDFDocument.load(arrayBuffer);
+            const pages = pdfDoc.getPages();
+
+            // 应用旋转，确保角度有效
+            pages.forEach((page, index) => {
+                let rotation = pageRotations[index] || rotationAngle;
+
+                // 确保旋转角度为 0, 90, 180 或 270
+                rotation = (rotation % 360 + 360) % 360; // 保持在 0-359 的范围
+                console.log(rotation)
+                page.setRotation(degrees(rotation || 0) );
+            });
+
+            // 保存新的 PDF
+            const pdfBytes = await pdfDoc.save();
+            
+            // 创建下载链接
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'modified_pdf.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+        
+        fileReader.readAsArrayBuffer(file);
+    };
+
 
     const handleZoomIn = () => {
-        if (zoomLevel < 1.6) {
-            setZoomLevel(prevZoom => prevZoom + 0.1);
+        if (zoomLevel < 2) {
+            setZoomLevel(prevZoom => prevZoom + 0.3);
             setWrapLevel(prevWrap => prevWrap + 50);
+        } else {
 
         }
 
     };
 
     const handleZoomOut = () => {
-        if (zoomLevel > 0.22) {
-            setZoomLevel(prevZoom => prevZoom - 0.1 > 0 ? prevZoom - 0.1 : prevZoom);
+        if (zoomLevel > 0.8) {
+            setZoomLevel(prevZoom => prevZoom - 0.3 > 0 ? prevZoom - 0.3 : prevZoom);
             setWrapLevel(prevWrap => prevWrap - 50);
+        } else {
+            
         }
 
     };
@@ -148,9 +186,8 @@ const PDFProcessor: React.FC<{}> = () => {
                         </div>
                     </Document>
                 </div>
-                <div>
+                <div className='flex justify-center items-center space-x-3 selecto-ignore'>
                 <Button onClick={onDownload} label='download' />
-
                 </div>
             </>
         )
