@@ -1,14 +1,13 @@
 'use client'
 import PDFProcessor from './component/pdf-processor'
 import 'tailwindcss/tailwind.css';
-import './app.scss';
-import './page.scss';
-import Head from 'next/head';
+import './styles/index.scss';
+// import Head from 'next/head';
 
 const Home = () => {
   return (
     <div className="flex flex-col min-h-screen" style={{ background: "#f7f5ee" }}>
-      <Head>
+      {/* <Head>
         <title>Rotate PDF Pages - Simple PDF Rotation Tool</title>
         <meta name="description" content="Easily rotate PDF pages online. Upload your PDF, click to rotate, and download the modified PDF in seconds." />
         <meta name="keywords" content="PDF, Rotate PDF, PDF Tool, PDF Rotation, Online PDF Rotator" />
@@ -29,7 +28,7 @@ const Home = () => {
         <meta property="og:description" content="Easily rotate PDF pages online. Upload your PDF, click to rotate, and download the modified PDF." />
         <meta property="og:url" content="https://yourdomain.com" />
         <meta property="og:type" content="website" />
-      </Head>
+      </Head> */}
       <header className="bg-white bg-gray-100 p-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Rotate PDF Pages</h1>
         <div className="links">
